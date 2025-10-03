@@ -2,7 +2,7 @@
 	 Databases Basics SQL - Data Definitions and Data Types --                                    --
 	------------------------------------------------------------------
 
-	Problem 1. Create Database
+	--Problem 1. Create Database
 	USE master;
 	CREATE DATABASE minions;
 
