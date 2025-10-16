@@ -1,0 +1,26 @@
+-- Създаваме таблицата Passports първо, защото тя ще бъде "родителската" таблица
+CREATE TABLE Passports (
+    passport_id INT PRIMARY KEY,                 -- Първичен ключ (уникален идентификатор)
+    passport_number NVARCHAR(20) NOT NULL        -- Номер на паспорт (уникален, но тук не е задължително да бъде UNIQUE)
+);
+
+-- Създаваме таблицата Persons, която ще има външен ключ към Passports
+CREATE TABLE Persons (
+    person_id INT PRIMARY KEY,                   -- Първичен ключ (уникален за всеки човек)
+    first_name NVARCHAR(50) NOT NULL,            -- Име (текстово поле)
+    salary DECIMAL(10,2) CHECK (salary > 0),     -- Заплата с проверка да е положителна
+    passport_id INT UNIQUE,                      -- Уникален външен ключ – осигурява връзката 1:1
+    CONSTRAINT FK_Persons_Passports FOREIGN KEY (passport_id)
+        REFERENCES Passports(passport_id)
+);
+
+-- Вмъкваме данните
+INSERT INTO Passports VALUES
+(101, 'N34FG21B'),
+(102, 'K65LO4R7'),
+(103, 'ZE657QP2');
+
+INSERT INTO Persons VALUES
+(1, 'Roberto', 43300.00, 102),
+(2, 'Tom', 56100.00, 103),
+(3, 'Yana', 60200.00, 101);
