@@ -1,0 +1,138 @@
+-- ============================================
+-- СЪЗДАВАНЕ НА БАЗА ДАННИ
+-- ============================================
+
+CREATE DATABASE SchoolDB;           -- Създаваме нова база данни с име SchoolDB
+GO                                  -- Изпълнява командата преди следващите редове (разделител в SSMS)
+
+USE SchoolDB;                       -- Избираме да работим с новата база данни
+GO
+
+-- ============================================
+-- СЪЗДАВАНЕ НА ТАБЛИЦИ
+-- ============================================
+
+-- Таблица с ученици
+CREATE TABLE Students (
+    StudentID INT IDENTITY(1,1) PRIMARY KEY,     -- Уникален идентификатор за всеки студент (автоматично увеличаващ се)
+    FirstName NVARCHAR(50) NOT NULL,             -- Име на студента (задължително)
+    Age INT,
+    Email NVARCHAR(100) UNIQUE,                  -- Имейлът трябва да е уникален за всеки студент
+    EnrollmentDate DATE DEFAULT GETDATE()        -- Автоматично добавя текущата дата при запис
+);
+
+-- Таблица с курсове
+CREATE TABLE Courses (
+    CourseID INT IDENTITY(1,1) PRIMARY KEY,       -- Уникален идентификатор за курс
+    CourseName NVARCHAR(100) NOT NULL,            -- Име на курса (задължително)
+    Credits INT CHECK (Credits > 0 AND Credits <= 10)  -- Кредити: от 1 до 10
+);
+
+-- Таблица за записвания на студенти (връзка М:М)
+CREATE TABLE Enrollments (
+    EnrollmentID INT IDENTITY(1,1) PRIMARY KEY,   -- Уникален идентификатор за всеки запис
+    StudentID INT,                                -- Външен ключ към Students
+    CourseID INT,                                 -- Външен ключ към Courses
+    Grade DECIMAL(3,2) CHECK (Grade BETWEEN 2.00 AND 6.00),  -- Оценка от 2.00 до 6.00
+    CONSTRAINT FK_Enrollments_Students FOREIGN KEY (StudentID) REFERENCES Students(StudentID),  -- Връзка към Students
+    CONSTRAINT FK_Enrollments_Courses FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)       -- Връзка към Courses
+);
+
+-- ============================================
+-- ВМЪКВАНЕ НА ДАННИ
+-- ============================================
+
+-- Добавяне на 3 ученика
+INSERT INTO Students (FirstName, Age, Email)
+VALUES 
+('Ivan', 20, 'ivan.petrov@uni.bg'),       -- Ред 1
+('Maria', 22, 'maria.geo@uni.bg'),        -- Ред 2
+('Georgi', 19, 'georgi.iv@uni.bg');       -- Ред 3
+
+-- Добавяне на 3 курса
+INSERT INTO Courses (CourseName, Credits)
+VALUES 
+('Database Systems', 5),             -- Курс по бази данни
+('Programming Fundamentals', 6),     -- Основи на програмирането
+('Networks', 4);                     -- Мрежи
+
+-- Добавяне на записвания на студенти към курсове
+INSERT INTO Enrollments (StudentID, CourseID, Grade)
+VALUES 
+(1, 1, 5.50),                        -- Иван в курс Database Systems
+(2, 1, 4.75),                        -- Мария в същия курс
+(3, 2, 5.00);                        -- Георги в Programming Fundamentals
+
+-- ============================================
+--  SELECT ЗАЯВКИ (извличане на данни)
+-- ============================================
+
+-- Всички студенти 
+SELECT * FROM Students 
+
+-- Покавза имената на студентите на и над 20 години
+SELECT FirstName FROM Students
+WHERE Age >= 20
+
+-- ============================================
+-- UPDATE И DELETE
+-- ============================================
+
+-- Промяна на оценка на студент
+UPDATE Students
+SET FirstName = 'Mariya'
+WHERE StudentID = 2;                                  -- Само за записа с ID 2 (Мария)
+
+-- Изтриване на студент
+DELETE FROM Enrollments
+WHERE StudentID = 3;                                  -- Изтриваме трети запис от Enrollments
+
+-- ============================================
+-- ДОБАВЯНЕ, ПРОМЯНА И ИЗТРИВАНЕ НА КОЛОНА 
+-- ============================================
+
+-- Добавяне на колона LastName към таблица Students
+ALTER TABLE Students
+ADD LastName VARCHAR(50)                                -- Фамилия
+
+-- Промяна на типа на колона LastName в таблица Students
+ALTER TABLE Students
+ALTER COLUMN LastName NVARCHAR(20)                      -- В полето могат да се записват стрингове в Unicode с дължина до 20 символа
+
+-- Птемахване на колона LastName от таблица Students
+ALTER TABLE Students
+DROP COLUMN LastName
+
+-- ============================================
+-- ДОБАВЯНЕ НА ОГРАНИЧЕНИЯ 
+-- ============================================
+
+-- Добавяне на допълнителен CHECK за годините на студента
+ALTER TABLE Students
+ADD CONSTRAINT CK_Students_Age CHECK (Age BETWEEN 5 AND 100)  -- Ограничение: възрастта трябва да е между 5 и 100
+
+-- Добавяне на DEFAULT стойност за Grade
+ALTER TABLE Enrollments
+ADD CONSTRAINT DF_Enrollments_Grade DEFAULT 4.00 FOR Grade;   -- Ако не е въведена оценка, по подразбиране е 4.00
+
+-- ============================================
+-- ПРЕМАХВАНЕ НА ОГРАНИЧЕНИЯ
+-- ============================================
+
+-- Премахваме DEFAULT ограничението
+ALTER TABLE Enrollments
+DROP CONSTRAINT DF_Enrollments_Grade;                          
+
+-- ============================================
+-- TRUNCATE И DROP
+-- ============================================
+
+-- TRUNCATE: Изтрива всички записи от таблица, но оставя структурата
+TRUNCATE TABLE Enrollments;                              -- Изчистване на всички записи и нулиране на идентити брояча
+
+-- DROP: напълно премахва таблица от базата
+DROP TABLE Enrollments;                                  -- Изтриваме таблицата Courses
+
+-- Изтриване на цялата база данни (внимавай!)
+USE master;                                              -- Преминаваме към системната база master
+DROP DATABASE SchoolDB;                              -- Премахваме напълно SchoolDB
