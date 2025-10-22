@@ -1,0 +1,41 @@
+-- Таблица Students
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,                  -- Уникален идентификатор на студент
+    name NVARCHAR(50) NOT NULL                   -- Име на студента
+);
+
+-- Таблица Exams
+CREATE TABLE Exams (
+    exam_id INT PRIMARY KEY,                     -- Уникален идентификатор на изпит
+    name NVARCHAR(50) NOT NULL                   -- Име на изпита
+);
+
+-- Таблица Students_Exams (връзка M:N)
+CREATE TABLE Students_Exams (
+    student_id INT NOT NULL,                     -- FK към Students
+    exam_id INT NOT NULL,                        -- FK към Exams
+    CONSTRAINT PK_Students_Exams PRIMARY KEY (student_id, exam_id), -- Съставен ключ (и двете заедно са уникални)
+    CONSTRAINT FK_StudentsExams_Students FOREIGN KEY (student_id)
+        REFERENCES Students(student_id),
+    CONSTRAINT FK_StudentsExams_Exams FOREIGN KEY (exam_id)
+        REFERENCES Exams(exam_id)
+);
+
+-- Вмъкваме данните
+INSERT INTO Students VALUES
+(1, 'Mila'),
+(2, 'Toni'),
+(3, 'Ron');
+
+INSERT INTO Exams VALUES
+(101, 'Spring MVC'),
+(102, 'Neo4j'),
+(103, 'Oracle 11g');
+
+INSERT INTO Students_Exams VALUES
+(1, 101),
+(1, 102),
+(2, 101),
+(3, 103),
+(2, 102),
+(2, 103);
