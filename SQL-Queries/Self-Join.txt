@@ -7,12 +7,12 @@ CREATE TABLE Teachers
     -- Външен ключ: manager_id => teachers.teacher_id
     CONSTRAINT fk_teacher_manager
     FOREIGN KEY (manager_id) 
-    REFERENCES teachers(teacher_id)
+    REFERENCES Teachers(teacher_id)
 );
 
 -- Вмъкване на данни
-INSERT INTO teachers (teacher_id, name) VALUES (101, 'John');
-INSERT INTO teachers
+INSERT INTO Teachers (teacher_id, name) VALUES (101, 'John');
+INSERT INTO Teachers
 VALUES 
 (105, 'Mark', 101),
 (106, 'Greta', 101),
