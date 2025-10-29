@@ -117,3 +117,35 @@ INSERT INTO [reviews] ([product_name], [rating], [review_text], [review_date]) V
 --SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
 --FROM INFORMATION_SCHEMA.COLUMNS
 --WHERE TABLE_NAME = 'customers';
+
+-- Извежда всички клиенти, които са от град София
+SELECT * FROM customers
+WHERE city = 'Sofia'
+
+-- Извежда само първото име, фамилията и града на всеки клиент
+SELECT first_name, last_name, city FROM customers
+
+-- Извежда всички клиенти, подредени по фамилия във възходящ (азбучен) ред
+SELECT * FROM customers
+ORDER BY last_name ASC
+
+-- Извежда всички клиенти, подредени по фамилия в низходящ (обратен азбучен) ред
+SELECT * FROM customers
+ORDER BY last_name DESC
+
+-- Извежда всички клиенти, чието собствено име започва с буквата 'M'
+SELECT * FROM customers
+WHERE first_name LIKE 'M%'
+
+-- Извежда всички клиенти, чийто град съдържа точно 5 букви
+SELECT * FROM customers
+WHERE city LIKE '_____';
+
+-- Променя телефонния номер 0888123456 на 0888888888 за съответните клиенти
+UPDATE customers
+SET phone = '0888888888'
+WHERE phone = '0888123456'
+
+-- Изтрива всички клиенти, които са от град Пловдив
+DELETE FROM customers
+WHERE city = 'Plovdiv'
