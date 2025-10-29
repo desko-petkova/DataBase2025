@@ -1,0 +1,119 @@
+CREATE DATABASE excersice;
+GO
+
+USE excersice;
+GO
+
+CREATE TABLE [customers] (
+  [customer_id] INT IDENTITY(1,1) PRIMARY KEY,
+  [first_name] VARCHAR(50) NOT NULL,
+  [last_name] VARCHAR(50) NOT NULL,
+  [email] VARCHAR(100) NOT NULL,
+  [phone] VARCHAR(20),
+  [city] VARCHAR(50)
+);
+GO
+
+CREATE TABLE [products] (
+  [product_id] INT IDENTITY(1,1) PRIMARY KEY,
+  [product_name] VARCHAR(100) NOT NULL,
+  [category] VARCHAR(50),
+  [price] DECIMAL(10,2),
+  [in_stock] INT
+);
+GO
+
+CREATE TABLE [orders] (
+  [order_id] INT IDENTITY(1,1) PRIMARY KEY,
+  [order_number] VARCHAR(20) NOT NULL,
+  [order_date] DATE NOT NULL,
+  [total_amount] DECIMAL(10,2),
+  [status] VARCHAR(20)
+);
+GO
+
+CREATE TABLE [suppliers] (
+  [supplier_id] INT IDENTITY(1,1) PRIMARY KEY,
+  [company_name] VARCHAR(100) NOT NULL,
+  [contact_name] VARCHAR(100),
+  [email] VARCHAR(100),
+  [phone] VARCHAR(20)
+);
+GO
+
+CREATE TABLE [reviews] (
+  [review_id] INT IDENTITY(1,1) PRIMARY KEY,
+  [product_name] VARCHAR(100) NOT NULL,
+  [rating] INT NOT NULL,
+  [review_text] VARCHAR(255),
+  [review_date] DATE
+);
+GO
+
+
+INSERT INTO [customers] ([first_name], [last_name], [email], [phone], [city]) VALUES
+('Ivan', 'Petrov', 'ivan.petrov@example.com', '0888123456', 'Sofia'),
+('Maria', 'Georgieva', 'maria.geo@example.com', '0888345678', 'Plovdiv'),
+('Nikolay', 'Dimitrov', 'nikolay.d@example.com', '0899456123', 'Varna'),
+('Elena', 'Stoyanova', 'elena.s@example.com', '0899123456', 'Burgas'),
+('Petar', 'Nikolov', 'petar.nik@example.com', '0877123456', 'Ruse'),
+('Georgi', 'Ivanov', 'georgi.iv@example.com', '0888123000', 'Pleven'),
+('Kristina', 'Vasileva', 'kristina.v@example.com', '0889456123', 'Stara Zagora'),
+('Dimitar', 'Todorov', 'dimitar.t@example.com', '0899345678', 'Veliko Tarnovo'),
+('Teodora', 'Mihaylova', 'teodora.m@example.com', '0899554321', 'Yambol'),
+('Radoslav', 'Kolev', 'radoslav.k@example.com', '0888678901', 'Pazardzhik');
+
+INSERT INTO [products] ([product_name], [category], [price], [in_stock]) VALUES
+('Laptop Lenovo ThinkPad X1', 'Electronics', 1999.99, 50),
+('Smartphone Samsung Galaxy S24', 'Electronics', 1299.50, 120),
+('Office Chair Ergonomic Pro', 'Furniture', 320.00, 200),
+('Gaming Mouse Razer Viper', 'Accessories', 89.99, 400),
+('Bluetooth Speaker JBL Go 4', 'Electronics', 120.00, 150),
+('Coffee Maker Philips 3200', 'Home Appliances', 249.90, 60),
+('Running Shoes Nike Air', 'Sportswear', 150.00, 300),
+('Smartwatch Garmin Vivoactive', 'Wearables', 349.00, 90),
+('Desk Lamp Xiaomi LED', 'Home', 45.99, 250),
+('Backpack Samsonite Travel', 'Accessories', 180.00, 100);
+
+INSERT INTO [orders] ([order_number], [order_date], [total_amount], [status]) VALUES
+('ORD1001', '2024-01-05', 320.00, 'Completed'),
+('ORD1002', '2024-01-06', 499.99, 'Completed'),
+('ORD1003', '2024-01-07', 89.99, 'Pending'),
+('ORD1004', '2024-01-08', 120.00, 'Completed'),
+('ORD1005', '2024-01-09', 180.00, 'Shipped'),
+('ORD1006', '2024-01-10', 999.00, 'Pending'),
+('ORD1007', '2024-01-11', 349.00, 'Completed'),
+('ORD1008', '2024-01-12', 249.00, 'Cancelled'),
+('ORD1009', '2024-01-13', 799.00, 'Completed'),
+('ORD1010', '2024-01-14', 150.00, 'Processing');
+
+INSERT INTO [suppliers] ([company_name], [contact_name], [email], [phone]) VALUES
+('TechWorld Ltd', 'Ivan Petrov', 'sales@techworld.bg', '029812345'),
+('OfficeLine AD', 'Maria Georgieva', 'info@officeline.bg', '028834567'),
+('HomeComfort BG', 'Nikolay Dimitrov', 'contact@homecomfort.bg', '029912345'),
+('ActiveSport EOOD', 'Elena Stoyanova', 'support@activesport.bg', '028812378'),
+('GadgetStore', 'Petar Nikolov', 'shop@gadgetstore.bg', '029845612'),
+('BalkanFurniture', 'Kristina Vasileva', 'sales@balkanfurniture.bg', '028833456'),
+('ElectroPlus', 'Dimitar Todorov', 'info@electroplus.bg', '028877665'),
+('MegaTrade', 'Teodora Mihaylova', 'orders@megatrade.bg', '028899221'),
+('ProTech', 'Radoslav Kolev', 'contact@protech.bg', '029865432'),
+('EcoLights', 'Georgi Ivanov', 'office@ecolights.bg', '028856732');
+
+
+INSERT INTO [reviews] ([product_name], [rating], [review_text], [review_date]) VALUES
+('Laptop Lenovo ThinkPad X1', 5, 'Excellent performance and battery life.', '2024-02-01'),
+('Smartphone Samsung Galaxy S24', 4, 'Great camera, but battery could be better.', '2024-02-02'),
+('Office Chair Ergonomic Pro', 5, 'Super comfortable for long work hours.', '2024-02-03'),
+('Gaming Mouse Razer Viper', 4, 'Very responsive, good grip.', '2024-02-04'),
+('Bluetooth Speaker JBL Go 4', 5, 'Clear sound and portable.', '2024-02-05'),
+('Coffee Maker Philips 3200', 5, 'Perfect coffee every morning.', '2024-02-06'),
+('Running Shoes Nike Air', 4, 'Comfortable but slightly tight fit.', '2024-02-07'),
+('Smartwatch Garmin Vivoactive', 5, 'Excellent tracking features.', '2024-02-08'),
+('Desk Lamp Xiaomi LED', 4, 'Bright and minimalistic.', '2024-02-09'),
+('Backpack Samsonite Travel', 5, 'Durable and stylish.', '2024-02-10');
+
+--EXEC sp_help 'customers';
+
+--SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
+--FROM INFORMATION_SCHEMA.COLUMNS
+--WHERE TABLE_NAME = 'customers';
