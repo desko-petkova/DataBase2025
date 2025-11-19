@@ -6,36 +6,42 @@ CREATE TABLE Students (
 );
 
 INSERT INTO Students VALUES
-(1, 'Maria Petrova', 'm.petrova@example.com', 'Sofia'),
-(2, 'Ivan Ivanov', 'ivan_ivanov@example.com', 'Plovdiv'),
-(3, 'Georgi Stoyanov', 'geo.stoyanov@example.com', 'Varna'),
-(4, 'Petya Georgieva', 'p.georgieva@example.com', 'Sofia'),
-(5, 'Hristo Kolev', 'kolev.h@example.com', 'Burgas');
+(6, 'Maria Petrova', 'm.petrova@efxgfxgxgfxxample.com', 'Sofia',6),
+(7, 'Ivan Ivanov', 'ivan_ivanov@exaimple.com', 'Plovdiv',7),
+(8, 'Georgi Stoyanov', 'geo.stoyanov@excgample.com', 'Varna',8),
+(9, 'Petya Georgieva', 'p.georgieva@examjple.com', 'Sofia',6),
+(10, 'Hristo Kolev', 'kolev.h@exampguyule.com', 'Burgas',7);
 
 
-SELECT TOP 3 *
+SELECT TOP 4 *
 FROM Students
 ORDER BY full_name;
 
 -- 1. Изведи имената на учениците в главни букви.
-
+SELECT UPPER(full_name) AS upper_name
+FROM Students
 
 -- 2. Имена в малки букви
-
+SELECT LOWER(full_name) AS lower_name
+FROM Students 
 
 --3. Изведи дължината на пълното име на всеки ученик.
-
+SELECT full_name, LEN(full_name) AS [length]
+FROM Students
 
 --4. Покажи първите 3 букви от името на всеки ученик.
-
-
+SELECT full_name, LEFT(full_name, 3) AS first3
+FROM Students
 
 --5. Покажи последните 4 букви от името на всеки ученик.
-
-
+SELECT full_name, RIGHT(full_name, 4) AS last4
+FROM Students 
 
 --6. Изведи домейн частта от имейла (всичко след @).
 
+SELECT email,
+SUBSTRING(email, CHARINDEX('@', email) +1, LEN(email)) AS domain
+FROM Students
 
 --7. Замени .com с .bg в имейлите.
 
@@ -50,5 +56,36 @@ ORDER BY full_name;
 --10. Създай колона „Инициали“, например:
 --    Maria Petrova → M.P.
 
+--====== CONCAT =======
+
+--11. Направи колона „student_info“ със съдържание:
+--    - „Maria Petrova is from Sofia“
+
+
+--12. Изведи „ID + име“:
+--   #1–Maria Petrova
+--   #2–Ivan Ivanov
+
+
+
+ALTER TABLE STUDENTS
+ADD grade INT DEFAULT 5 NOT NULL
+
+--13. Създай e-mail за всеки ученик във формат:
+    -- firstname.lastname@school.bg
+--      като всички букви са малки.
+
+
+--14. Изведи информация:
+--   „Maria (5 grade)“
+
+--15. Изведи текст:
+--   „Sofia: Maria, Georgi“
+
+
+
+-- 16. Създай колона login във формат:
+--     m.petrova5
+--     (първа буква от името + „.“ + фамилия + клас)
 
 
