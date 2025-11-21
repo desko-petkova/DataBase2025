@@ -1,0 +1,25 @@
+-- 01 --
+SELECT FirstName, LastName
+FROM Employees
+WHERE LEFT(FirstName, 2) = 'SA'
+--
+SELECT FirstName, LastName
+FROM Employees
+WHERE SUBSTRING(FirstName, 1, 2) = 'Sa'
+-- 02 ---
+SELECT FirstName, LastName
+FROM Employees
+WHERE CHARINDEX('EI', LastName, 1) != 0
+---
+SELECT FirstName, LastName
+FROM Employees
+WHERE LastName LIKE '%ei%'
+-- 03 ---
+SELECT FirstName, DepartmentID, HireDate
+FROM Employees
+WHERE (DepartmentID = 3 OR DepartmentID = 10) AND
+YEAR(HireDate) >= 1995 AND YEAR(HireDate) <= 2005
+--
+SELECT FirstName, DepartmentID, HireDate
+FROM Employees
+WHERE DepartmentID IN (3,10) AND YEAR(HireDate) BETWEEN 1995 AND 2005 
