@@ -23,3 +23,10 @@ YEAR(HireDate) >= 1995 AND YEAR(HireDate) <= 2005
 SELECT FirstName, DepartmentID, HireDate
 FROM Employees
 WHERE DepartmentID IN (3,10) AND YEAR(HireDate) BETWEEN 1995 AND 2005 
+
+-- 04 ----
+SELECT FirstName, LastName, JobTitle
+FROM Employees
+WHERE CHARINDEX('engineer', JobTitle, 1) = 0
+
+-- 05 ---

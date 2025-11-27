@@ -1,8 +1,10 @@
+
 CREATE TABLE Students (
     student_id INT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     city VARCHAR(50)
+    grade INT DEFAULT 5 NOT NULL
 );
 
 INSERT INTO Students VALUES
@@ -44,48 +46,68 @@ SUBSTRING(email, CHARINDEX('@', email) +1, LEN(email)) AS domain
 FROM Students
 
 --7. Замени .com с .bg в имейлите.
-
+SELECT email, REPLACE(email,'.com','.bg') AS email_bg
+FROM Students
 
 -- 8. За всеки студент изведи:
 --    Име | Град | Дължина на града
-
+SELECT full_name, city,
+LEN(city) AS city_legth
+FROM Students
 
 --9. Изведи имената, но направи първата буква главна, останалите малки.
-
+SELECT full_name,
+UPPER(LEFT(full_name, 1))+
+LOWER(SUBSTRING(full_name,  2, LEN(full_name)))AS formatted_name
+FROM Students
 
 --10. Създай колона „Инициали“, например:
 --    Maria Petrova → M.P.
+SELECT full_name,
+LEFT(full_name, 1) + '.'+
+LEFT(SUBSTRING(full_name, 
+        CHARINDEX(' ', full_name) +1, Len(full_name)),1)+'.' AS initials
+        FROM Students
 
 --====== CONCAT =======
 
 --11. Направи колона „student_info“ със съдържание:
 --    - „Maria Petrova is from Sofia“
-
+SELECT CONCAT(full_name, ' is from ', city) AS info
+FROM Students
 
 --12. Изведи „ID + име“:
 --   #1–Maria Petrova
 --   #2–Ivan Ivanov
+SELECT CONCAT('#',student_id, '-', full_name) AS numberred
+FROM Students
 
-
-
-ALTER TABLE STUDENTS
-ADD grade INT DEFAULT 5 NOT NULL
 
 --13. Създай e-mail за всеки ученик във формат:
     -- firstname.lastname@school.bg
 --      като всички букви са малки.
-
+SELECT full_name, email,
+LOWER(CONCAT(LEFT(full_name, CHARINDEX(' ', full_name) -1),'.',
+SUBSTRING(full_name, 
+        CHARINDEX(' ', full_name) +1, Len(full_name)),
+        '@school.bg')) AS email_bg
+FROM Students
 
 --14. Изведи информация:
 --   „Maria (5 grade)“
+SELECT full_name,
+CONCAT(LEFT(full_name, CHARINDEX(' ', full_name) ),'(' ,grade, ') grade')
+FROM Students
 
 --15. Изведи текст:
 --   „Sofia: Maria, Georgi“
+SELECT  CONCAT(city ,':', STRING_AGG(full_name,',')) AS people
+FROM Students
+GROUP BY city
 
-
-
+=========================================================
+------------------- ЗА ДОМАШНО ---------------
+========================================================
 -- 16. Създай колона login във формат:
 --     m.petrova5
 --     (първа буква от името + „.“ + фамилия + клас)
-
-
