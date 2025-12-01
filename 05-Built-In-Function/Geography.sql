@@ -13,41 +13,36 @@ INSERT INTO Messages VALUES
 (3, '   Trim me   '),
 (4, 'Palindrome'),
 (5, 'Test');
-
+INSERT INTO Messages VALUES
+(6, 'Kapak')
 -- LTRIM — премахване на водещи интервали
 -- RTRIM — премахване на интервали в края
 -- Комбинация LTRIM + RTRIM (еквивалент на TRIM)
-SELECT text_value,
-    LTRIM(text_value) AS no_space_left
-FROM [Messages]
+SELECT * FROM Messages
 
 -- 2. Покажи текст без крайните интервали.
 SELECT text_value,
-    RTRIM(text_value) AS no_space_right
-FROM [Messages]
+    LTRIM(text_value) as left_trim,
+    RTRIM(text_value) as right_trim 
+FROM Messages
 
 -- 3. Премахни интервали от двете страни.
 SELECT text_value,
-    TRIM(text_value) AS no_space
-FROM [Messages]
+    LTRIM(RTRIM(text_value)) AS trimm 
+    FROM Messages
+
 -- 4. REVERSE — обърни текста на обратно
 SELECT text_value,
-    TRIM(REVERSE(text_value)) AS reversed
-FROM [Messages]
+    REVERSE(text_value) AS reversed 
+    FROM Messages
 
 -- 5. Намери кои текстове са палиндроми
-INSERT INTO Messages VALUES
-(6, 'Kapak'),
-(7, '  OKO     ');
-
 SELECT text_value
 FROM Messages
-WHERE TRIM(text_value) = TRIM(REVERSE(text_value));
+WHERE TRIM(text_value) = REVERSE(TRIM(text_value))
 
 -- 6. REPLICATE — повтори текста 3 пъти
-SELECT text_value,
-    REPLICATE(text_value, 3) AS replicate_x3
-FROM [Messages]
+
 
 -- 7. Изгради „рамка“ около текста с REPLICATE. Промер: ***Hello world***
 

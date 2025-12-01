@@ -6,6 +6,7 @@ WHERE LEFT(FirstName, 2) = 'SA'
 SELECT FirstName, LastName
 FROM Employees
 WHERE SUBSTRING(FirstName, 1, 2) = 'Sa'
+
 -- 02 ---
 SELECT FirstName, LastName
 FROM Employees
@@ -14,6 +15,7 @@ WHERE CHARINDEX('EI', LastName, 1) != 0
 SELECT FirstName, LastName
 FROM Employees
 WHERE LastName LIKE '%ei%'
+
 -- 03 ---
 SELECT FirstName, DepartmentID, HireDate
 FROM Employees
@@ -23,43 +25,41 @@ YEAR(HireDate) >= 1995 AND YEAR(HireDate) <= 2005
 SELECT FirstName, DepartmentID, HireDate
 FROM Employees
 WHERE DepartmentID IN (3,10) AND YEAR(HireDate) BETWEEN 1995 AND 2005 
-<<<<<<< HEAD
 
--- 04 ----
-SELECT FirstName, LastName, JobTitle
-FROM Employees
-WHERE CHARINDEX('engineer', JobTitle, 1) = 0
-
--- 05 ---
-=======
 --- 04 --
 SELECT FirstName, JobTitle
 FROM Employees
 WHERE CHARINDEX('engineer', JobTitle, 1) = 0
+
 -- 05 --
 SELECT [Name], TownID
 FROM Towns
 WHERE LEN([Name]) = 5 OR  LEN([Name]) = 6
 ORDER BY [Name] ASC -- DESC
+
 -- 06 ---
 SELECT TownID,[Name]
 FROM Towns
 WHERE LEFT([Name],1)  IN ('M', 'K','B','E')
 ORDER BY [Name] DESC
+
 -- 07 --
 SELECT TownID,[Name]
 FROM Towns
 WHERE LEFT([Name],1) NOT IN ('R', 'D','B')
 ORDER BY [Name] ASC
+
 -- 08 ---
 CREATE VIEW V_EmployeesHired AS
 SELECT FirstName, LastName
 FROM Employees
 WHERE YEAR(HireDate) > 2000
+
 -- 09 --
 SELECT FirstName, LastName
 FROM Employees
 WHERE LEN(LastName) = 5
+
 -- 10 --
 USE Geography
 SELECT PeakName, RiverName,
@@ -67,4 +67,31 @@ LOWER(CONCAT(PeakName,RiverName)) AS Mix
 FROM Peaks, Rivers
 WHERE LEFT(RiverName, 1) = RIGHT(PeakName,1)
 ORDER BY Mix ASC
->>>>>>> 753e9b902722d0cf8069ec51419b8e8837d5f97f
+
+--02 --
+SELECT MountainRange
+FROM Mountains
+WHERE CHARINDEX(' ',MountainRange) > 0;
+--
+SELECT MountainRange
+FROM Mountains
+WHERE MountainRange LIKE '% %';
+
+-- 03 --
+SELECT * FROM Countries 
+
+SELECT CountryName, [Population]
+FROM Countries
+WHERE RIGHT(CountryName, 1) IN ('K','C','I')
+ORDER BY [Population] DESC
+
+-- 04 --
+SELECT PeakName
+FROM Peaks
+WHERE LEN(PeakName) >= 15
+ORDER BY PeakName ASC
+
+-- 05 --
+SELECT CountryName, IsoCode
+FROM Countries
+WHERE LEN(CountryName)-LEN(REPLACE(CountryName,'a','')) >=3

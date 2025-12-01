@@ -22,31 +22,58 @@ INSERT INTO Events VALUES
 -- DATEPART — Извличане на отделни части от датата
 ---------------------------------------------------
 -- 1. Покажи event_name, месеца и годината на start_date
+SELECT event_name,
+    DATEPART(month, start_date) AS month,
+    DATEPART(year, start_date) AS year,
+    DATEPART(day, start_date) AS day
+FROM Events
 
 -- 2. Извлечи ден от седмицата (1–7)
+SELECT event_name,
+    DATEPART(weekday, start_date) AS day_namber_of_week
+FROM Events
 
 --------------------------------------------------------
 -- DATENAME — Пълното име на месеца или ден от седмицата
 --------------------------------------------------------
 -- 3. Покажи името на събитието и име на месеца на 
 --    start_date (January, February…).
-
+SELECT event_name,
+    DATENAME(month, start_date) AS month
+FROM Events
 -- 4. Покажи име на деня (Monday, Tuesday…).
-
+SELECT event_name,
+    DATENAME(weekday, start_date) AS [weekday]
+FROM Events
 -------------------------------------------
 -- DATEDIFF — Извеждане на продължителност
 -------------------------------------------
 
 -- 5. Изчисли колко дни трае всяко събитие.
+SELECT event_name, start_date, end_date,
+    DATEDIFF(day, start_date, end_date)+1 AS duration
+FROM Events
 
 -- 6. Колко дни остават до събитието
-
+SELECT event_name,
+    DATEDIFF(day, start_date, GETDATE()) AS days_to_start
+FROM Events
 -------------------------------------------
 -- DATEADD — Добавяне или намаляне на дни
 -------------------------------------------
 -- 7. Добави 7 дни към началната дата
+ SELECT event_name, start_date,
+    DATEADD(month, 10, start_date) AS plus_10_months
+FROM Events
+--- 
+ SELECT event_name, start_date,
+    DATEADD(day, 7, start_date) AS plus_7_days
+FROM Events
 
 -- 8. Намали end_date с 3 дни.
+ SELECT event_name, start_date,
+    DATEADD(day, -3, start_date) AS minus_3_days
+FROM Events
 
 -----------------------------------------
 -- GETDATE — Покажи текущата дата и час
