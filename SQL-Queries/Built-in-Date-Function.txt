@@ -16,7 +16,9 @@ INSERT INTO Events VALUES
 (2, 'Workshop',   '2024-11-02', '2024-11-02'),
 (3, 'Webinar',    '2025-03-20', '2025-03-20'),
 (4, 'Training',   '2025-07-01', '2025-07-10'),
-(5, 'Hackathon',  '2025-05-14', '2025-05-16');
+(5, 'Hackathon',  '2025-05-14', '2025-05-16'),
+(6, 'ITCourse', '2025-01-12', '2026-02-15'),
+(7, 'SoftUni', '2025-12-02', '2026-12-15');
 
 ---------------------------------------------------
 -- DATEPART — Извличане на отделни части от датата
@@ -82,17 +84,38 @@ FROM Events
                        --  текущата година
                        --  текущия месец
                        --  текущия ден
-
+SELECT
+    DATEPART(year, GETDATE()) AS current_year,
+    DATEPART(month, GETDATE()) AS current_month,
+    DATEPART(day, GETDATE()) AS current_day,
+    EOMONTH(GETDATE()) AS last_day;
 ------------------------------------------
 -- EOMONTH — Последният ден на месеца
 ------------------------------------------
 -- 10. Покажи последния ден на месеца за start_date.
+SELECT event_name,
+    EOMONTH(start_date) AS last_day_of_month
+ FROM Events
 
 -- 11. Първи ден на следващия месец  EOMONTH + DATEADD
+SELECT DATEADD(DAY,1,EOMONTH(GETDATE())) AS next_month
 
 -- 12. Изчисли колко месеца има между start_date и end_date
+SELECT event_name,
+DATEDIFF(MONTH, start_date, end_date) AS month_diff
+FROM Events
 
 -- 13. Създай колона "Event start: "
 --     Формат на данните:"12 January 2025"
+SELECT event_name,
+    CONCAT(DATEPART(DAY, start_date), ' ' ,
+    DATENAME(MONTH, start_date), ' ',
+    DATEPART(year, start_date))
+    AS [Event start:]
+    FROM Events
 
 -- 14. Покажи само събития, които започват в текущия месец
+SELECT *
+FROM Events
+WHERE DATEPART(MONTH, START_DATE) = DATEPART(MONTH, GETDATE());
+--AND DATEPART(YEAR, START_DATE) = DATEPART(YEAR, GETDATE());

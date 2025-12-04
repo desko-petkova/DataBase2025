@@ -18,7 +18,20 @@ AccountHolderId INT NOT NULL,
 Balance MONEY DEFAULT 0
 CONSTRAINT PK_Accounts PRIMARY KEY (Id)
 CONSTRAINT FK_Accounts_AccountHolders FOREIGN KEY (AccountHolderId) REFERENCES AccountHolders(Id)
-)
+);
+
+CREATE TABLE CreditCards
+(
+    Id INT NOT NULL,
+    AccountHolderId INT NOT NULL,
+    PaymentNumber VARCHAR(30) NOT NULL,
+    ExpirationDate DATE NULL,
+
+    CONSTRAINT PK_CreditCards PRIMARY KEY (Id),
+
+    CONSTRAINT FK_CreditCards_AccountHolders 
+        FOREIGN KEY (AccountHolderId) REFERENCES AccountHolders(Id)
+);
 
 INSERT INTO AccountHolders (Id, FirstName, LastName, SSN) VALUES (1, 'Susan', 'Cane', '1234567890');
 INSERT INTO AccountHolders (Id, FirstName, LastName, SSN) VALUES (2, 'Kim', 'Novac', '1234567890');
@@ -51,3 +64,10 @@ INSERT INTO Accounts (Id, AccountHolderId, Balance) VALUES (15, 6, 0.19);
 INSERT INTO Accounts (Id, AccountHolderId, Balance) VALUES (16, 2, 5345.34);
 INSERT INTO Accounts (Id, AccountHolderId, Balance) VALUES (17, 11, 76653.20);
 INSERT INTO Accounts (Id, AccountHolderId, Balance) VALUES (18, 1, 235469.89);
+
+INSERT INTO CreditCards (Id, AccountHolderId, PaymentNumber, ExpirationDate)
+VALUES 
+(1, 1, '5645329876543210', '2027-05-01'),
+(2, 2, '4417931234567890', '2026-11-01'),
+(3, 5, '378282246310005', '2028-02-01'),
+(4, 9, '4556737586899855', '2027-09-01');
