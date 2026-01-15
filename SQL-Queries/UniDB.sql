@@ -112,6 +112,8 @@ VALUES
 (104, 'Dr. Dimitar Kolev', 'Assoc. Prof.', 2, 103),   -- Подчинен на Yana Petrova
 (105, 'Dr. Hristo Marinov', 'Prof.', 3, NULL),        -- Ръководител на катедра "Physics"
 (106, 'Dr. Vesela Georgieva', 'Dr.', 1, 101); 
+INSERT INTO Professors (professor_id, full_name, title, department_id, manager_id)
+VALUES (107, 'Dr. Ivo Ivanov', 'Dr.', 2, NULL);
 
 SELECT * FROM Professors
 
@@ -122,6 +124,13 @@ VALUES
 (3, 'Linear Algebra', 4, 103),
 (4, 'Discrete Mathematics', 5, 104),
 (5, 'Quantum Mechanics', 6, 105);
+
+INSERT INTO Courses (course_id, course_name, credits, professor_id)
+VALUES (6, 'Functional programming', 6, NULL);
+INSERT INTO Courses (course_id, course_name, credits, professor_id)
+VALUES (7, 'Mathematics', 6, 103);
+INSERT INTO Courses (course_id, course_name, credits, professor_id)
+VALUES (8, 'Programming', 3, 107);
 
 SELECT * FROM Courses
 
