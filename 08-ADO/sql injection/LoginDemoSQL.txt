@@ -1,0 +1,16 @@
+CREATE DATABASE LoginDemo;
+GO
+
+USE LoginDemo;
+
+CREATE TABLE Users
+(
+    Id INT PRIMARY KEY IDENTITY,
+    Username NVARCHAR(50),
+    Password NVARCHAR(50)
+);
+
+INSERT INTO Users (Username, Password) VALUES
+('admin', 'admin123'),
+('user1', 'pass1'),
+('user2', 'pass2');
